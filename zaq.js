@@ -7,6 +7,9 @@ var zaq = {
   err: function (x) {
     return this.log(chalk.bold.red(' x ERROR:   '), x);
   },
+  warn: function (x) {
+    return this.log(chalk.bold.yellow(' ! WARNING: '), x);
+  },
   info: function (x) {
     return this.log(chalk.bold.blue(' → INFO:    '), x);
   },
