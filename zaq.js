@@ -76,8 +76,8 @@ zaq.mini = function (str) {
 
 zaq.cloq = function (name) {
   var start = _.now();
-  var title = chalk.white.bold.bgRed(' '+name+' ')+' ';
-  zaq.time(title + chalk.red('<><><><><><><><><><><><><><><><><><><><>'));
+  var title = chalk.cyan.bold(name+' ')+' ';
+  zaq.time(title + chalk.grey('<><><><><><><><><><><><><><><><><><><><>'));
   return {
     title: title,
     start: start,
@@ -86,13 +86,13 @@ zaq.cloq = function (name) {
       var thisLap = _.now();
       var lapTime = (thisLap - this.lastLap);
       this.lastLap = thisLap;
-      zaq.time(this.title + chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
+      zaq.time(this.title + chalk.bold(evt) + chalk.grey(' took ') + chalk.bold(lapTime / 1000) + chalk.grey(' seconds.'));
     },
     done: function (evt) {
       if (evt) this.lap(evt);
       var total = (_.now() - this.start);
       zaq.time(this.title + 'finished after ' + chalk.bold(total / 1000) + ' seconds.')
-      zaq.time(this.title + chalk.red('<><><><><><><><><><><><><><><><><><><><>'))
+      zaq.time(this.title + chalk.grey('<><><><><><><><><><><><><><><><><><><><>'))
     }
   }
 }
