@@ -76,21 +76,23 @@ zaq.mini = function (str) {
 
 zaq.cloq = function (name) {
   var start = _.now();
-  zaq.time(chalk.bold.cyan(name) + ': cloq ticking.');
+  var title = chalk.white.bold.bgRed(' '+name+' ')+' ';
+  zaq.time(title + chalk.red('<><><><><><><><><><><><><><><><><><><><>'));
   return {
-    title: chalk.bold.cyan(name),
+    title: title,
     start: start,
     lastLap: start,
     lap: function (evt) {
       var thisLap = _.now();
       var lapTime = (thisLap - this.lastLap);
       this.lastLap = thisLap;
-      zaq.time(this.title + ': ' + chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
+      zaq.time(this.title + chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
     },
     done: function (evt) {
       if (evt) this.lap(evt);
       var total = (_.now() - this.start);
-      zaq.time(this.title + ': finished after ' + chalk.bold(total / 1000) + ' seconds.')
+      zaq.time(this.title + 'finished after ' + chalk.bold(total / 1000) + ' seconds.')
+      zaq.time(this.title + chalk.red('<><><><><><><><><><><><><><><><><><><><>'))
     }
   }
 }
