@@ -7,19 +7,19 @@ var zaq = {};
 zaq.log = console.log;
 
 zaq.err = function (x) {
-  return zaq.log(chalk.bold.red(' x ERROR:   '), x);
+  return zaq.log(chalk.bold.red(' x ERR: '), x);
 };
 zaq.warn = function (x) {
-  return zaq.log(chalk.bold.yellow(' ! WARNING: '), x);
+  return zaq.log(chalk.bold.yellow(' # WARN:'), x);
 };
 zaq.info = function (x) {
-  return zaq.log(chalk.bold.blue(' → INFO:    '), x);
+  return zaq.log(chalk.bold.blue(' → INFO:'), x);
 };
 zaq.win = function (x) {
-  return zaq.log(chalk.bold.green(' ✓ SUCCESS: '), x);
+  return zaq.log(chalk.bold.green(' ✓ WIN: '), x);
 };
 zaq.time = function (x) {
-  return zaq.log(chalk.bold.cyan(' ~ TIME:    '), x);
+  return zaq.log(chalk.bold.grey(' ♦ TIME:'), x);
 }
 zaq.pretty = function (content) {
   return JSON.stringify(content, null, '  ');
@@ -76,20 +76,21 @@ zaq.mini = function (str) {
 
 zaq.cloq = function (name) {
   var start = _.now();
-  zaq.time(chalk.cyan(name) + ' cloq ticking.');
+  zaq.time(chalk.bold.cyan(name) + ': cloq ticking.');
   return {
+    title: chalk.bold.cyan(name),
     start: start,
     lastLap: start,
     lap: function (evt) {
       var thisLap = _.now();
       var lapTime = (thisLap - this.lastLap);
       this.lastLap = thisLap;
-      zaq.time(chalk.cyan(name) + ': ' + chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
+      zaq.time(this.title + ': ' + chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
     },
     done: function (evt) {
       if (evt) this.lap(evt);
       var total = (_.now() - this.start);
-      zaq.time(chalk.cyan(name) + ': ' + chalk.cyan(name) + ' total time: ' + chalk.bold(total / 1000) + ' seconds.')
+      zaq.time(this.title + ': finished after ' + chalk.bold(total / 1000) + ' seconds.')
     }
   }
 }

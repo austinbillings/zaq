@@ -15,11 +15,11 @@ zaq.win('I\'m a win!');
 zaq.err('Oh no! I\'m an error. :(');
 zaq.info('Some info here!');
 zaq.warn('WATCH OUT FOR THAT SHIT.');
-zaq.time('This thing took 10 seconds.');
+/*
 zaq.divider('I\'m a divider.');
 zaq.divider('I\'m a divider too!', '~');
 zaq.json('I\'m JSON with a label', sampleJSON);
-
+*/
 var cloq = new zaq.cloq('Timerunner');
 cloq.lap('Nothing really');
 setTimeout(function () {
