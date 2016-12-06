@@ -19,7 +19,7 @@ zaq.win = function (x) {
   return zaq.log(chalk.bold.green(' ✓ SUCCESS: '), x);
 };
 zaq.time = function (x) {
-  return zaq.log(chalk.bold.cyan(' ⏳ TIME:    '), x);
+  return zaq.log(chalk.bold.cyan(' ~ TIME:    '), x);
 }
 zaq.pretty = function (content) {
   return JSON.stringify(content, null, '  ');
