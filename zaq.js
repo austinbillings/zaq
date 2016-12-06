@@ -84,12 +84,12 @@ zaq.cloq = function (name) {
       var thisLap = _.now();
       var lapTime = (thisLap - this.lastLap);
       this.lastLap = thisLap;
-      zaq.time(chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
+      zaq.time(chalk.cyan(name) + ': ' + chalk.bold(evt) + ' took ' + chalk.bold(lapTime / 1000) + ' seconds.');
     },
     done: function (evt) {
       if (evt) this.lap(evt);
       var total = (_.now() - this.start);
-      zaq.time(chalk.cyan(name) + ' total time: ' + chalk.bold(total / 1000) + ' seconds.')
+      zaq.time(chalk.cyan(name) + ': ' + chalk.cyan(name) + ' total time: ' + chalk.bold(total / 1000) + ' seconds.')
     }
   }
 }
