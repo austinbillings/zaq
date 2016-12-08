@@ -15,17 +15,7 @@ zaq.win('I\'m a win!');
 zaq.err('Oh no! I\'m an error. :(');
 zaq.info('Some info here!');
 zaq.warn('WATCH OUT FOR THAT SHIT.');
-/*
+
 zaq.divider('I\'m a divider.');
-zaq.divider('I\'m a divider too!', '~');
+zaq.divider('I\'m a CUSTOM DIVIDER!!!', '~');
 zaq.json('I\'m JSON with a label', sampleJSON);
-*/
-var cloq = new zaq.cloq('Timerunner');
-cloq.lap('Nothing really');
-setTimeout(function () {
-  cloq.lap('still going!');
-  setTimeout(function () {
-    cloq.lap('another thing');
-    cloq.done();
-  }, 1404);
-}, 3000);

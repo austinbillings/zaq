@@ -6,6 +6,9 @@ var zaq = {};
 
 zaq.log = console.log;
 
+zaq.win = function (x) {
+  return zaq.log(chalk.bold.green(' ✓ WIN: '), x);
+};
 zaq.err = function (x) {
   return zaq.log(chalk.bold.red(' x ERR: '), x);
 };
@@ -14,9 +17,6 @@ zaq.warn = function (x) {
 };
 zaq.info = function (x) {
   return zaq.log(chalk.bold.blue(' → INFO:'), x);
-};
-zaq.win = function (x) {
-  return zaq.log(chalk.bold.green(' ✓ WIN: '), x);
 };
 zaq.time = function (x) {
   return zaq.log(chalk.bold.grey(' ♦ TIME:'), x);
