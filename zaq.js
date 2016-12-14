@@ -11,7 +11,7 @@ var zaq = {
   log: console.log,
   obj: (obj, color = 'cyan') => {
     let msg = chalk[color]('\n >>     ');
-    msg += zaq.pretty(obj).split('\n').join('\n' + chalk.dim(' ::     '));
+    msg += (_.isString(obj) ? obj : zaq.pretty(obj)).split('\n').join('\n' + chalk.dim(' ::     '));
     msg += '\n';
     return msg;
   },
