@@ -38,14 +38,13 @@ var zaq = {
   pretty: (content) => JSON.stringify(content, null,'  '),
   space: (content) => zaq.log('\n' + content + '\n'),
   nLines: (n, lines) => {
-    console.log(n);
     return Array(n).join(lines || '=')
   },
   mini: (str) => {
     return (_.isString(str) ? str : str.toString()).trim().substr(0, 100);
   },
   divider: (text, lines) => {
-    let lineCount = Math.floor((process.stdout.columns - text.length + 1) * (1 / (lines ? lines.length : 1)));
+    let lineCount = Math.floor((process.stdout.columns - (text.length + 1)) * (1 / (lines ? lines.length : 1)));
     return zaq.log(text + ' '+ zaq.nLines(lineCount, lines));
   },
   json: (x, y) => deprecated('json'),
