@@ -5,7 +5,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.1.0',
+  version: '1.1.1',
   verbose: true,
   log: console.log
 };
