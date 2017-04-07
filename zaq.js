@@ -5,7 +5,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.1.1',
+  version: '1.1.2',
   verbose: true,
   log: console.log
 };
@@ -28,17 +28,17 @@ zaq.err = (text, obj) => {
 };
 
 zaq.warn = (text, obj) => {
-  text = chalk.bold.yellow(' # WARN:  ') + chalk.bold(text);
+  text = chalk.bold.yellow(' # WARN:  ') + text;
   return zaq.log(text + (obj ? zaq.obj(obj, 'yellow') : ''));
 };
 
 zaq.info = (text, obj) => {
-  text = chalk.bold.blue(' → INFO:  ') + chalk.bold(text);
+  text = chalk.bold.blue(' → INFO:  ') + text;
   return zaq.log(text + (obj ? zaq.obj(obj, 'blue') : ''));
 };
 
 zaq.time = (text, obj) => {
-  text = chalk.bold.grey(' ♦ TIME:  ') + chalk.bold(text);
+  text = chalk.bold.grey(' ♦ TIME:  ') + text;
   return zaq.log(text + (obj ? zaq.obj(obj, 'grey') : ''));
 };
 
@@ -52,14 +52,20 @@ zaq.mini = (str) => str.toString().trim().substr(0, 100);
 
 zaq.divider = (text, lines) => {
   let lineCount = Math.floor((process.stdout.columns - (text.length + 1)) * (1 / (lines ? lines.length : 1)));
-  return zaq.log(text + ' '+ zaq.nLines(lineCount, lines));
+  return zaq.log(chalk.dim(text + ' '+ zaq.nLines(lineCount, lines)));
 };
 
 zaq.weight = (...pathParts) => {
   let file = path.join(...pathParts);
   let basename = path.basename(file);
-  let filesize = (fs.statSync(file).size / 1024).toFixed(2);
-  zaq.info(`File '${basename}' is ${filesize} kb`);
+  let stats;
+  try {
+    stats = fs.statSync(file);
+  } catch (e) {
+    return zaq.warn(`File ${chalk.yellow.italic(basename)} not found, cannot be weighed.`);
+  }
+  let filesize = (stats.size / 1024).toFixed(2);
+  zaq.info(`File ${chalk.blue.italic(basename)} is ${chalk.blue(filesize)} kb`);
 };
 
 module.exports = zaq;
