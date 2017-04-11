@@ -5,14 +5,14 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.1.3',
+  version: '1.1.4',
   verbose: true,
   log: console.log
 };
 
 zaq.obj = (obj = null, color = 'cyan') => {
   let msg = chalk[color]('\n >>       ');
-  obj = _.isString(obj) ? obj : zaq.pretty(obj);
+  obj = (_.isString(obj) ? obj : zaq.pretty(obj))+'';
   msg += obj.split('\n').join('\n' + chalk[color].dim(' ::       '));
   //msg += chalk[color].dim('\n ' + zaq.nLines(40, '\''));
   return msg;
