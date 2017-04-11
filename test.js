@@ -26,6 +26,7 @@ zaq.win('I\'m a win!');
 zaq.err('Oh no! I\'m an error. :(');
 zaq.info('Some info here!');
 zaq.warn('WATCH OUT FOR THAT SHIT.');
+zaq.info('Hopefully an undefined property', sampleJSON.amvadmb);
 zaq.time('TIME TICKER');
 zaq.divider("Check sizes...");
 zaq.weight(__dirname, 'yarn.lock');
