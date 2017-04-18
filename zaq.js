@@ -5,7 +5,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.1.4',
+  version: '1.1.5',
   verbose: true,
   log: console.log
 };
@@ -47,13 +47,13 @@ zaq.pretty = (content) => JSON.stringify(content, null,'  ');
 
 zaq.space = (content) => zaq.log('\n' + content + '\n');
 
-zaq.nLines = (n, lines) => Array(n).join(lines || '=');
+zaq.nLines = (n, lines = '-') => Array(n).join(chalk.dim(lines));
 
 zaq.mini = (str) => str.toString().trim().substr(0, 100);
 
 zaq.divider = (text, lines) => {
   let lineCount = Math.floor((process.stdout.columns - (text.length + 1)) * (1 / (lines ? lines.length : 1)));
-  return zaq.log(chalk.dim(text + ' '+ zaq.nLines(lineCount, lines)));
+  return zaq.space(`${text} ${zaq.nLines(lineCount, lines)}`);
 };
 
 zaq.weight = (...pathParts) => {
