@@ -1,20 +1,21 @@
-const jawn = require('node-jawn');
-const _ = require('underscore');
-const path = require('path');
-const moment = require('moment');
 const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
+const _ = require('underscore');
+const moment = require('moment');
+const stripAnsi = require('strip-ansi');
 
 const zaq = {
-  version: '1.2.5',
+  version: '1.2.6',
   verbose: true,
   loggers: [ { handler: console.log } ]
 };
 
 zaq.log = (input, level = 'misc') => {
   zaq.loggers.forEach(({ handler, options = {} }) => {
-    let { timestamps, levels } = options;
+    let { timestamps, levels, stripColors } = options;
     if (timestamps) input = (chalk.dim(moment().format('l LTS '))) + input;
+    if (stripColors) input = stripAnsi(input);
     if (levels && levels.indexOf(level) < 0) return;
     if (handler) handler(input);
   });
