@@ -6,14 +6,15 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.2.2',
+  version: '1.2.3',
   verbose: true,
   loggers: [ { handler: console.log } ]
 };
 
 zaq.log = (input) => {
-  zaq.loggers.forEach(({ handler, options } = {}) => {
-    if (options.timestamp) input = (chalk.dim(moment().format('l LTS '))) + input;
+  zaq.loggers.forEach(({ handler, options = {} }) => {
+    let { timestamp } = options;
+    if (timestamp) input = (chalk.dim(moment().format('l LTS '))) + input;
     if (handler) handler(input);
   });
 }
