@@ -1,13 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const _ = require('underscore');
 const moment = require('moment');
 const stripAnsi = require('strip-ansi');
 
 const zaq = {
-  version: '1.2.6',
-  verbose: true,
+  version: '1.2.7',
   loggers: [ { handler: console.log } ]
 };
 
@@ -31,7 +29,7 @@ zaq.unuse = (index) => {
 
 zaq.obj = (obj = null, color = 'cyan') => {
   let msg = chalk[color]('\n >>>>       ');
-  obj = (_.isString(obj) ? obj : zaq.pretty(obj))+'';
+  obj = (typeof obj === 'string' ? obj : zaq.pretty(obj))+'';
   msg += obj.split('\n').join('\n' + chalk[color].dim(' ::::       '));
   return msg;
 };
