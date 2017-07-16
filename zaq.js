@@ -6,15 +6,16 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.2.4',
+  version: '1.2.5',
   verbose: true,
   loggers: [ { handler: console.log } ]
 };
 
-zaq.log = (input) => {
+zaq.log = (input, level = 'misc') => {
   zaq.loggers.forEach(({ handler, options = {} }) => {
-    let { timestamps } = options;
+    let { timestamps, levels } = options;
     if (timestamps) input = (chalk.dim(moment().format('l LTS '))) + input;
+    if (levels && levels.indexOf(level) < 0) return;
     if (handler) handler(input);
   });
 }
@@ -34,24 +35,24 @@ zaq.obj = (obj = null, color = 'cyan') => {
   return msg;
 };
 
-zaq.message = (style, prefix, text, obj) => {
+zaq.message = ({ style, prefix }, { text, obj }) => {
   prefix = ' ' + prefix + (Array(10 - prefix.length).join(' '));
   text = chalk.bold[style](prefix) + chalk.bold(text);
   text += obj ? zaq.obj(obj, style) : '';
   return text;
 }
 
-zaq.logMessage = (style, prefix, text, obj) => {
-  let message = zaq.message(style, prefix, text, obj);
-  return zaq.log(message);
+zaq.logMessage = ({ style, prefix, level }, { text, obj }) => {
+  let message = zaq.message({ style, prefix }, { text, obj });
+  return zaq.log(message, level);
 }
 
-zaq.win = (text, obj) => zaq.logMessage('green', '✓ WIN:', text, obj);
-zaq.err = (text, obj) => zaq.logMessage('red', '✘ ERR:', text, obj);
-zaq.flag = (text, obj) => zaq.logMessage('cyan', '⌘ FLAG:', text, obj);
-zaq.warn = (text, obj) => zaq.logMessage('yellow', '⌗ WARN:', text, obj);
-zaq.info = (text, obj) => zaq.logMessage('blue', '→ INFO:', text, obj);
-zaq.time = (text, obj) => zaq.logMessage('grey', '◔ TIME:', text, obj);
+zaq.win = (text, obj) => zaq.logMessage({ style: 'green', prefix: '✓ WIN:', level: 'info' }, { text, obj });
+zaq.err = (text, obj) => zaq.logMessage({ style: 'red', prefix: '✘ ERR:', level: 'error' }, { text, obj });
+zaq.flag = (text, obj) => zaq.logMessage({ style: 'cyan', prefix: '⌘ FLAG:', level: 'info' }, { text, obj });
+zaq.warn = (text, obj) => zaq.logMessage({ style: 'yellow', prefix: '⌗ WARN:', level: 'warn' }, { text, obj });
+zaq.info = (text, obj) => zaq.logMessage({ style: 'blue', prefix: '→ INFO:', level: 'info' }, { text, obj });
+zaq.time = (text, obj) => zaq.logMessage({ style: 'grey', prefix: '◔ TIME:', level: 'info' }, { text, obj });
 zaq.pretty = (content) => JSON.stringify(content, null,'  ');
 zaq.space = (content, amount = 1) => {
   let pad = zaq.nLines(amount, '\n');
