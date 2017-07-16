@@ -1,21 +1,29 @@
 const jawn = require('node-jawn');
 const _ = require('underscore');
 const path = require('path');
+const moment = require('moment');
 const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.2.0',
+  version: '1.2.1',
   verbose: true,
-  loggers: [ console.log ]
+  loggers: [ { handler: console.log } ]
 };
 
-zaq.log = (...input) => {
-  zaq.loggers.forEach(logger => logger(...input));
+zaq.log = (input) => {
+  zaq.loggers.forEach(({ handler, options }) => {
+    if (options.timestamp) input = (chalk.dim(moment().format('l LTS '))) + input;
+    handler(input);
+  });
 }
 
-zaq.use = (logger) => {
-  if (zaq.loggers.indexOf(logger) === -1) zaq.loggers.push(logger);
+zaq.use = (handler, options = {}) => {
+  return zaq.loggers.push({ handler, options });
+}
+
+zaq.unuse = (index) => {
+  return zaq.loggers.splice(index, 1);
 }
 
 zaq.obj = (obj = null, color = 'cyan') => {
