@@ -5,55 +5,63 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const zaq = {
-  version: '1.1.5',
+  version: '1.2.0',
   verbose: true,
-  log: console.log
+  loggers: [ console.log ]
 };
 
+zaq.log = (...input) => {
+  zaq.loggers.forEach(logger => logger(...input));
+}
+
+zaq.use = (logger) => {
+  if (zaq.loggers.indexOf(logger) === -1) zaq.loggers.push(logger);
+}
+
 zaq.obj = (obj = null, color = 'cyan') => {
-  let msg = chalk[color]('\n >>       ');
+  let msg = chalk[color]('\n >>>>       ');
   obj = (_.isString(obj) ? obj : zaq.pretty(obj))+'';
-  msg += obj.split('\n').join('\n' + chalk[color].dim(' ::       '));
-  //msg += chalk[color].dim('\n ' + zaq.nLines(40, '\''));
+  msg += obj.split('\n').join('\n' + chalk[color].dim(' ::::       '));
   return msg;
 };
 
-zaq.win = (text, obj) => {
-  text = chalk.bold.green(' ✓ WIN:   ') + chalk.bold(text);
-  return zaq.log(text + (obj ? zaq.obj(obj, 'green') : ''));
-};
+zaq.message = (style, prefix, text, obj) => {
+  prefix = ' ' + prefix + (Array(10 - prefix.length).join(' '));
+  text = chalk.bold[style](prefix) + chalk.bold(text);
+  text += obj ? zaq.obj(obj, style) : '';
+  return text;
+}
 
-zaq.err = (text, obj) => {
-  text = chalk.bold.red(' x ERR:   ') + chalk.bold(text);
-  return zaq.log(text + (obj ? zaq.obj(obj, 'red') : ''));
-};
+zaq.logMessage = (style, prefix, text, obj) => {
+  let message = zaq.message(style, prefix, text, obj);
+  return zaq.log(message);
+}
 
-zaq.warn = (text, obj) => {
-  text = chalk.bold.yellow(' # WARN:  ') + text;
-  return zaq.log(text + (obj ? zaq.obj(obj, 'yellow') : ''));
-};
-
-zaq.info = (text, obj) => {
-  text = chalk.bold.blue(' → INFO:  ') + text;
-  return zaq.log(text + (obj ? zaq.obj(obj, 'blue') : ''));
-};
-
-zaq.time = (text, obj) => {
-  text = chalk.bold.grey(' ♦ TIME:  ') + text;
-  return zaq.log(text + (obj ? zaq.obj(obj, 'grey') : ''));
-};
-
+zaq.win = (text, obj) => zaq.logMessage('green', '✓ WIN:', text, obj);
+zaq.err = (text, obj) => zaq.logMessage('red', '✘ ERR:', text, obj);
+zaq.flag = (text, obj) => zaq.logMessage('cyan', '⌘ FLAG:', text, obj);
+zaq.warn = (text, obj) => zaq.logMessage('yellow', '⌗ WARN:', text, obj);
+zaq.info = (text, obj) => zaq.logMessage('blue', '→ INFO:', text, obj);
+zaq.time = (text, obj) => zaq.logMessage('grey', '◔ TIME:', text, obj);
 zaq.pretty = (content) => JSON.stringify(content, null,'  ');
+zaq.space = (content, amount = 1) => {
+  let pad = zaq.nLines(amount, '\n');
+  return zaq.log(pad + content + pad);
+}
 
-zaq.space = (content) => zaq.log('\n' + content + '\n');
-
-zaq.nLines = (n, lines = '-') => Array(n).join(chalk.dim(lines));
+zaq.nLines = (n, line = '-') => Array(n).join(chalk.dim(line));
 
 zaq.mini = (str) => str.toString().trim().substr(0, 100);
 
-zaq.divider = (text, lines) => {
-  let lineCount = Math.floor((process.stdout.columns - (text.length + 1)) * (1 / (lines ? lines.length : 1)));
-  return zaq.space(`${text} ${zaq.nLines(lineCount, lines)}`);
+zaq.divider = (text = '', options = {}) => {
+  let { lineSymbol, centered, space } = options;
+  let { columns } = process.stdout;
+  let textWidth = text.length + (centered ? 2 : 1);
+  let lineCount = Math.floor((columns - textWidth) / (lineSymbol ? lineSymbol.length : 1));
+  lineCount = centered ? Math.ceil(lineCount / 2) : lineCount;
+  let filler = zaq.nLines(lineCount, lineSymbol);
+  let output = centered ? `${filler} ${text} ${filler}` : `${text} ${filler}`;
+  return zaq.space(output, space);
 };
 
 zaq.weight = (...pathParts) => {
