@@ -32,6 +32,7 @@ zaq.info('Recalculation of offset vector:', 41001284.4140014140000000);
 zaq.warn('Possible corruption in files: ', ['_flush65286354.41589.flo', '_flush65485655.90508.flo']);
 zaq.info('Hopefully an undefined property', sampleJSON.amvadmb);
 zaq.time('50ms elapsed.');
+zaq.debug('Some debug info...');
 zaq.flag('lol test');
 zaq.divider("Check sizes...", { space: 2, lineSymbol: ':', centered: true });
 zaq.weight(__dirname, 'yarn.lock');

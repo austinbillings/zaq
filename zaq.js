@@ -5,7 +5,7 @@ const moment = require('moment');
 const stripAnsi = require('strip-ansi');
 
 const zaq = {
-  version: '1.2.7',
+  version: '1.2.8',
   loggers: [ { handler: console.log } ]
 };
 
@@ -52,6 +52,7 @@ zaq.flag = (text, obj) => zaq.logMessage({ style: 'cyan', prefix: '⌘ FLAG:', l
 zaq.warn = (text, obj) => zaq.logMessage({ style: 'yellow', prefix: '⌗ WARN:', level: 'warn' }, { text, obj });
 zaq.info = (text, obj) => zaq.logMessage({ style: 'blue', prefix: '→ INFO:', level: 'info' }, { text, obj });
 zaq.time = (text, obj) => zaq.logMessage({ style: 'grey', prefix: '◔ TIME:', level: 'info' }, { text, obj });
+zaq.debug = (text, obj) => zaq.logMessage({ style: 'magenta', prefix: '◆ DEBUG:', level: 'debug' }, { text, obj });
 zaq.pretty = (content) => JSON.stringify(content, null,'  ');
 zaq.space = (content, amount = 1) => {
   let pad = zaq.nLines(amount, '\n');
