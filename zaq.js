@@ -4,9 +4,15 @@ const chalk = require('chalk');
 const moment = require('moment');
 const stripAnsi = require('strip-ansi');
 
+const namespaceCache = new Map();;
+
 const faqtory = (namespace = '') => {
+  if (typeof namespace === 'string' && namespaceCache.has(namespace)) {
+    return namespaceCache.get(namespace);
+  }
+
   const zaq = {
-    version: '1.4.0',
+    version: '1.4.1',
     loggers: [ { handler: console.log } ]
   };
 
@@ -126,7 +132,7 @@ const faqtory = (namespace = '') => {
     let filesize = (stats.size / 1024).toFixed(2);
     zaq.info(`File ${chalk.blue.italic(basename)} is ${chalk.blue(filesize)} kb`);
   };
-
+  namespaceCache.set(namespace, zaq);
   return zaq;
 }
 
