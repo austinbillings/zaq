@@ -1,4 +1,5 @@
-var zaq = require('./zaq.js');
+const zaq = require('./zaq.js');
+const alternateInclude = require('./test2.js');
 
 var sampleJSON = {
   propName: {
@@ -43,3 +44,6 @@ alt.win('Fetching resources was successful.');
 alt.time('50ms elapsed.');
 alt.debug('Some debug info...');
 alt.flag('lol test');
+
+const other = zaq.as('otherSpace');
+other.info('works!');
