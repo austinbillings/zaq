@@ -1,4 +1,4 @@
-var zaq = require('./zaq.js')();
+var zaq = require('./zaq.js');
 
 var sampleJSON = {
   propName: {
@@ -37,3 +37,9 @@ zaq.flag('lol test');
 zaq.divider("Check sizes...", { space: 2, lineSymbol: ':', centered: true });
 zaq.weight(__dirname, 'yarn.lock');
 zaq.weight(__dirname, 'madeup.js');
+
+const alt = zaq.as('Alternate Namespace!');
+alt.win('Fetching resources was successful.');
+alt.time('50ms elapsed.');
+alt.debug('Some debug info...');
+alt.flag('lol test');
