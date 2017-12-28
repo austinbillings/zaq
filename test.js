@@ -1,4 +1,4 @@
-var zaq = require('./zaq.js');
+var zaq = require('./zaq.js')();
 
 var sampleJSON = {
   propName: {
