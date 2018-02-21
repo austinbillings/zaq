@@ -69,7 +69,7 @@ const faqtory = (namespace = '') => {
   });
 
   zaq.flag = logType({
-    style: 'cyan',
+    style: 'magenta',
     prefix: '⌘ FLAG:',
     level: 'info'
   });
@@ -93,7 +93,7 @@ const faqtory = (namespace = '') => {
   });
 
   zaq.debug = logType({
-    style: 'magenta',
+    style: 'cyan',
     prefix: '◆ DEBUG:',
     level: 'debug'
   });
