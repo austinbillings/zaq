@@ -1,12 +1,13 @@
-# zaq
+# `zaq`
 
 Did we need another Node-based logging utility? I dunno. Did we get one? *Yeah.*
 
 Have you met `zaq`? He's all about practicality and style. What are you doing? *Shake his hand!*
 
+Author: **Austin Billings**
 License: **MIT**
 
-## Installation
+# Installation
 You know the drill. Install via NPM:
 ```
 npm install zaq
@@ -15,23 +16,23 @@ npm install zaq
 ```
 yarn add zaq
 ```
-Require in your Node based project:
+Then just `require` in your Node based project:
 ```js
-var zaq = require('zaq');
+const zaq = require('zaq');
 ```
 
-![Zaq Demo](./doc/demo.png)
+![Zaq Demo Illustration](./doc/demo.png)
 
 ---
 
-## Basic Usage
+### Basic Usage
 
-- Logging namespaces can be easily implemented, using `zaq.as('MyNamespace')`. See `zaq.as()` details below.
+- Namespaced logging is easy, using `zaq.as('MyNamespace')`. See `zaq.as()` details below.
 - `zaq` logging functions are chainable, since each logging function returns its parent `zaq` instance.
 - *Loggable objects* passed after the *message* are rendered in "pretty print" so you can easily visually grep for meaningful bits.  Pass as many objects as you want as additional arguments to any `zaq` logging function.
 
 
-## Log Levels
+### Log Levels
 
 |Level|Level Name|Methods At This Level|
 |:---|:---|:---|
@@ -41,11 +42,12 @@ var zaq = require('zaq');
 |3|`error`|`zaq.err`|
 |4|`fatal`|`zaq.fatal`|
 
+---
 
 ### Logging Styles/Functions
 Use the following `zaq` methods to log info from your app in more meaningful ways. Each logging "style" has an associated prefix, color, and logging level. In basic usage (i.e. purely logging to the transient console), logging level does not have any impact, but when you leverage `zaq.use()`, you can divert messages of specific levels to different recipients (resembling a simple messaging platform). More info on `zaq.use` can be found below.
 
-### `zaq.ok(message[, ...loggables])`
+## `zaq.ok(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "OK" style, indicating successful operations.
 
 **Color**: `green`
@@ -64,7 +66,7 @@ zaq.ok('Successfully completed task.', {
 ```
 ![Example zaq.ok() result](./doc/ok.png)
 
-### `zaq.err(message[, ...loggables])`
+## `zaq.err(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "ERR" style, indicating an error encountered.
 
 **Color**: `red`
@@ -102,7 +104,7 @@ zaq.fatal('Universe-ending exception encountered.', {
 ```
 ![Example zaq.fatal() result](./doc/fatal.png)
 
-### `zaq.info(message[, ...loggables])`
+## `zaq.info(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "INFO" style, indicating situation-neutral general information.
 
 **Color**: `blue`
@@ -121,7 +123,7 @@ zaq.info('Neutral information, always nice:', {
 ```
 ![Example zaq.info() result](./doc/info.png)
 
-### `zaq.warn(message[, ...loggables])`
+## `zaq.warn(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "INFO" style, indicating situation-neutral general information.
 
 **Color**: `yellow`
@@ -140,7 +142,7 @@ zaq.warn('Attempted to do bad thing...:', {
 ```
 ![Example zaq.warn() result](./doc/warn.png)
 
-### `zaq.flag(message[, ...loggables])`
+## `zaq.flag(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "FLAG" style, indicating neutral yet high-profile information.
 
 **Color**: `magenta`
@@ -159,7 +161,7 @@ zaq.flag('Something you should know.', {
 ```
 ![Example zaq.flag() result](./doc/flag.png)
 
-### `zaq.debug(message[, ...loggables])`
+## `zaq.debug(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "DEBUG" style, indicating potentially low-level developer-to-developer information for debugging purposes.
 
 **Color**: `cyan`
@@ -178,7 +180,7 @@ zaq.debug('Something you should know.', {
 ```
 ![Example zaq.debug() result](./doc/debug.png)
 
-### `zaq.time(message[, ...loggables])`
+## `zaq.time(message[, ...loggables])`
 Prints a message and any additional "loggable" values in the "TIME" style, indicating temporally-related information.
 
 **Color**: `grey`
@@ -198,9 +200,9 @@ zaq.time('MyProcess consumed ' + some_duration + 'ms compute time', {
 
 ---
 
-## Other functionality
+# Other functionality
 
-### `zaq.divider(dividerText[, options])`
+## `zaq.divider(dividerText[, options])`
 Prints a "divider"-style line for better visual separation in your logs. Automatically fills the width of the present console process. Accepts several options:
 
 |Option Key|Accepted Values|Default Value|Info|
@@ -225,7 +227,7 @@ zaq
 ![Example zaq.divider() result](./doc/divider.png)
 
 
-### `zaq.weight(filepath)`
+## `zaq.weight(filepath)`
 Gets the 'weight' (size in KB) of the file at a given path. Logs the filesize using `zaq.info`.
 
 **Color**: `blue`
@@ -240,9 +242,9 @@ zaq.weight('./weight.js');
 ```
 ![Example zaq.time() result](./doc/weight.png)
 
-## Usability
+# Usability
 
-### `zaq.as(namespace)`
+## `zaq.as(namespace)`
 Returns a new instance of `zaq` wherein all log messages will be prefixed with the given `namespace` name. `namespace` can take the form of a string, number, or object (on which `toString` will be called for serialized identification, so be careful!).
 
 `zaq` instances are managed globally. This means that you can say `const zaq = require('zaq').as('MyModule')` in two different files, but both `zaq` *references* will actually refer to the same *instance*.
@@ -258,7 +260,7 @@ barZaq.info('Some Differing Information from Clone B.');
 
 ![Example zaq.as() result](./doc/as.png)
 
-### `zaq.use(handlerConfig)`
+## `zaq.use(handlerConfig)`
 Registers a message/log handler with `zaq`.
 
 **Returns a numerical index which can be passed to `zaq.dispose()` afterward to remove/disable the handler.**
@@ -327,7 +329,7 @@ zaq.fatal('Failed to reconnect to DB Interface.', { dbResponse });
 //    ...
 ```
 
-### `zaq.dispose(handlerIndex)`
+## `zaq.dispose(handlerIndex)`
 Deletes the handler & options associated with the given **`handlerIndex`, which is originally given as the return value of `zaq.use`**.
 
 **Example:**
