@@ -330,8 +330,16 @@ function fatalErrorHandler (fatalMessage) {
   });
 }
 
-const persistentHandler = zaq.use(persistentLoggerFn, { timestamps: true, stripColors: true, logLevel: 1 });
-const fatalHandler = zaq.use(fatalErrorHandler, { timestamps: true, stripColors: logLevel: 4 } );
+const persistentHandler = zaq.use(persistentLoggerFn, {
+  timestamps: true,
+  stripColors: true,
+  logLevel: 1
+});
+const fatalHandler = zaq.use(fatalErrorHandler, {
+  timestamps: true,
+  stripColors: true,
+  logLevel: 4
+});
 
 // ( ... )
 
