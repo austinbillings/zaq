@@ -1,6 +1,6 @@
 # `zaq`
 
-Did we need another Node-based logging utility? I dunno. Did we get one? *Yeah.*
+Did we need another NodeJS logging utility? I dunno. Did we get one? *Yeah.*
 
 Have you met `zaq`? He's all about practicality and style. What are you doing? *Shake his hand!*
 
