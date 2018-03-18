@@ -380,3 +380,4 @@ zaq.fatal('Oh no, the servers are on fire again.', request, { serverFireStats })
 ```
 
 ## `zaq.`**`createLogStyle`**`({ style, prefix, level })`
+Returns a ready-to-use logger function with the specified "style" (a valid `chalk` color), prefix text, and level name. Useful for creating your own custom log types.

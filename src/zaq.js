@@ -8,7 +8,7 @@ const namespaceCache = new Map();
 const { version } = require('../package.json');
 const { joinBy, nLines, toString } = require('./utils');
 
-const GUTTER_DEFAULT = 10;
+const GUTTER_DEFAULT = 9;
 const NAMESPACE_TYPES = ['string','number','object'];
 const LEVEL_VALUES = {
   0: 'debug',
