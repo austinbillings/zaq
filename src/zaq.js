@@ -32,7 +32,7 @@ const faqtory = (namespace = '') => {
           ? namespace.length + 3
           : 0
       );
-    const gutter = Array(gutterSize).fill(' ').join('');
+    const gutter = Array(gutterSize >= 0 ? gutterSize : 0).fill(' ').join('');
     return prefix + gutter;
   }
 
@@ -45,7 +45,6 @@ const faqtory = (namespace = '') => {
         : `[${namespace.toString()}]`
       : ''
   }
-
 
   const loggers = [
     { handler: console.log }
@@ -120,12 +119,12 @@ const faqtory = (namespace = '') => {
     const NAMESPACE = chalk[color].dim(getNamespacePrefix());
     const LEAD_DECOR = ' >>>>';
     const REST_DECOR = ' ::::';
-
     const colorize = chalk[color];
     const prefix = gutterize(NAMESPACE + colorize(LEAD_DECOR)) + '  ';
     const rendered = typeof obj === 'string'
       ? obj
       : toString(obj);
+
     return '\n' + prefix + rendered
       .split('\n')
       .join('\n' + gutterize(NAMESPACE + colorize.dim(REST_DECOR)) + '  ');
@@ -133,17 +132,17 @@ const faqtory = (namespace = '') => {
   };
 
   zaq.constructMessage = ({ style, prefix = '' }, { text, loggables }) => {
-    const headline = gutterize(
-      chalk.bold[style].dim(getNamespacePrefix()) + ' ' +
-      chalk.bold[style](prefix)
-    ) + chalk.bold(text);
+    const namespacePrefix = chalk.bold[style].dim(getNamespacePrefix());
+    const givenPrefix = chalk.bold[style](prefix);
+    const gutter = gutterize(`${namespacePrefix} ${givenPrefix}`);
 
+    const message = gutter + chalk.bold(text);
     const details = typeof loggables !== 'undefined'
       ? Array.isArray(loggables)
         ? loggables.map(obj => zaq.renderObject(obj, style)).join('')
         : zaq.renderObject(loggables, style)
       : '';
-    return headline + details;
+    return message + details;
   }
 
   zaq.logMessage = ({ text, loggables }, { style, prefix, level }) => {
@@ -218,7 +217,9 @@ const faqtory = (namespace = '') => {
       throw new TypeError('zaq.divider: invalid lineColor option. Use a "chalk" color.');
     const { columns } = process.stdout;
     const namespacePrefix = getNamespacePrefix();
-    const textWidth = stripAnsi(text).length + (centered ? 2 : 1);
+    const textWidth = text && text.length
+      ? stripAnsi(text).length + (centered ? 2 : 1)
+      : 0;
     const NAMESPACE = lineColor
       ? chalk.dim[lineColor](namespacePrefix)
       : chalk.dim(namespacePrefix);
