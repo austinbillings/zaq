@@ -166,6 +166,14 @@ const faqtory = (namespace = '') => {
     }
   };
 
+  zaq.applyTo = (message, method) => {
+    return (data) => {
+      return typeof method === 'function'
+        ? method(message, data)
+        : null;
+    }
+  };
+
   zaq.ok = zaq.createLogStyle({
     style: 'green',
     prefix: '✓ OK:',
