@@ -154,6 +154,18 @@ const faqtory = (namespace = '') => {
     return zaq.logMessage({ text, loggables }, spec);
   };
 
+  zaq.extractTo = (keyToExtract, method) => {
+    return (data) => {
+      var message = (typeof data === 'object' && typeof data[keyToExtract] === 'string')
+        ? data[keyToExtract]
+        : `("${keyToExtract}" not found in data)`;
+
+      return typeof method ==== 'function'
+        ? method(message, data)
+        : null;
+    }
+  };
+
   zaq.ok = zaq.createLogStyle({
     style: 'green',
     prefix: '✓ OK:',
