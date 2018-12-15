@@ -160,7 +160,7 @@ const faqtory = (namespace = '') => {
         ? data[keyToExtract]
         : `("${keyToExtract}" not found in data)`;
 
-      return typeof method ==== 'function'
+      return typeof method === 'function'
         ? method(message, data)
         : null;
     }
