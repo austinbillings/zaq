@@ -147,7 +147,7 @@ zaq.info('Neutral information, always nice:', {
 ## `zaq.warn(message[, ...loggables])`
 `Color: yellow   |   Level: 2 – warn`
 
-Prints a message and any additional "loggable" values in the "INFO" style, indicating situation-neutral general information.
+Prints a message and any additional "loggable" values in the "WARN" style, indicating warnings and similarly attention-worthy messages.
 
 **Example:**
 ```js
