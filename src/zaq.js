@@ -73,7 +73,7 @@ const faqtory = (namespace = '') => {
       .forEach(({ handler, options = {} }) => {
         let { timestamps, logLevel, acceptLevels, stripColors } = options;
         
-        const timestamp = timestamps ? dim(moment().format('l LTS ')) : null;
+        const timestamp = timestamps ? dim(moment().format()) : null;
         
         switch (true) {
           case timestamps:
