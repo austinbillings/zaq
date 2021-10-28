@@ -1,6 +1,6 @@
 {
-  "name": "zaq",
-  "version": "2.1.6",
+  "name": "@yuvapoojary/zaq",
+  "version": "3.0.0",
   "description": "Yet another fun little logging utility.",
   "main": "src/zaq.js",
   "scripts": {
