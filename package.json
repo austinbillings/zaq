@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/austinbillings/zaq.git"
+    "url": "git+https://github.com/yuvapoojary/zaq.git"
   },
   "keywords": [
     "fun",
@@ -22,9 +22,9 @@
   "author": "Austin Billings <austinjosephbillings@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/austinbillings/zaq/issues"
+    "url": "https://github.com/yuvapoojary/zaq/issues"
   },
-  "homepage": "https://github.com/austinbillings/zaq#readme",
+  "homepage": "https://github.com/yuvapoojary/zaq#readme",
   "dependencies": {
     "chalk": "^1.1.3",
     "moment": "^2.18.1",
