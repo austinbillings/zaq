@@ -2,7 +2,7 @@
   "name": "zaq",
   "version": "2.1.5",
   "description": "Yet another fun little logging utility.",
-  "main": "zaq.js",
+  "main": "index.js",
   "scripts": {
     "test": "node tests/main.js"
   },
