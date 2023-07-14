@@ -21,7 +21,7 @@ const faqtory = (namespace = '') => {
       throw new TypeError('gutterize: expects prefix to be string; ' + typeof prefix + ' given.');
     const gutterSize = GUTTER_DEFAULT - stripAnsi(prefix).length + (isString(namespace) ? namespace.length + 3 : 0);
     const gutter = ' '.repeat(gutterSize);
-    
+
     return prefix + gutter;
   }
 
@@ -49,13 +49,13 @@ const faqtory = (namespace = '') => {
     return (...args) => {
 
       const deprecationWarning = `zaq method ${red(name)} is deprecated and will be removed in future versions of zaq.`;
-      
+
       zaq.warn(deprecationWarning);
 
       if (!isFunction(replacement)) return;
 
       const replacementWarning = `${dim('Using alternative method')} ${replacementName ? blue(replacementName) : replacement.name} ${dim('instead.')}`
-      
+
       zaq.warn(replacementWarning);
 
       replacement(...args);
@@ -72,21 +72,21 @@ const faqtory = (namespace = '') => {
       .filter(logger => isObject(logger))
       .forEach(({ handler, options = {} }) => {
         let { timestamps, logLevel, acceptLevels, stripColors } = options;
-        
+
         const timestamp = timestamps ? dim(moment().format()) : null;
-        
+
         switch (true) {
           case timestamps:
             input = timestamp + input.split('\n').join('\n' + timestamp);
-            
+
           case stripColors:
             input = stripAnsi(input);
-            
+
           case (isNumber(logLevel) && getLevelValue(level) < logLevel):
           case (isArray(acceptLevels) && !acceptLevels.includes(level)):
           case (isString(acceptLevels) && acceptLevels !== level):
             return;
-            
+
           case isFunction(handler):
             return handler(input);
         }
@@ -101,7 +101,7 @@ const faqtory = (namespace = '') => {
   zaq.dispose = (index) => {
     if (!isNumber(index))
       throw new TypeError('zaq.dispose requires a valid handler index for removal.');
-    
+
     return delete zaq.loggers[index];
   }
 
@@ -245,29 +245,29 @@ const faqtory = (namespace = '') => {
     filler = lineColor ? chalk[lineColor](filler) : filler;
 
     const output = `${NAMESPACE} ${centered ? `${filler} ${text} ${filler}` : `${text} ${filler}`}`;
-    
+
     return zaq.space(output, space, 'info');
   };
 
   zaq.weight = (...pathParts) => {
     const file = path.join(...pathParts);
     const basename = path.basename(file);
-    
+
     let stats;
-    
+
     try {
       stats = fs.statSync(file);
     } catch (e) {
       return zaq.warn(`File ${chalk.yellow.italic(basename)} not found, cannot be weighed.`);
     }
-    
+
     let filesize = (stats.size / 1024).toFixed(2);
-    
+
     zaq.info(`File ${blue.italic(basename)} is ${blue(filesize)} kb`);
   };
-  
+
   namespaceCache.set(namespace, zaq);
-  
+
   return zaq;
 }
 
