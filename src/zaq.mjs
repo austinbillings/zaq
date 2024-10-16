@@ -103,16 +103,16 @@ export function faqtory (namespace = '') {
 
   instance.dispose = (index) => {
     if (!isNumber(index))
-      throw new TypeError('instance.dispose requires a valid handler index for removal.');
+      throw new TypeError('zaq.dispose requires a valid handler index for removal.');
 
     return delete instance.loggers[index];
   }
 
-  instance.unuse = deprecated('instance.unuse', instance.dispose, 'instance.dispose');
+  instance.unuse = deprecated('zaq.unuse', instance.dispose, 'zaq.dispose');
 
   instance.renderObject = (obj = null, color = 'cyan') => {
     if (!isString(color) || !color in chalk)
-      throw new TypeError('instance.renderObject requires color arg to be valid "chalk" style.');
+      throw new TypeError('zaq.renderObject requires color arg to be valid "chalk" style.');
 
     const NAMESPACE = chalk[color].dim(getNamespacePrefix());
     const LEAD_DECOR = ' >>>>';
@@ -176,13 +176,14 @@ export function faqtory (namespace = '') {
     level: 'info'
   });
 
-  instance.win = deprecated('instance.win', instance.ok, 'instance.ok');
+  instance.win = deprecated('zaq.win', instance.ok, 'zaq.ok');
 
-  instance.err = instance.createLogStyle({
+  instance.error = instance.createLogStyle({
     style: 'red',
     prefix: '✘ ERR:',
     level: 'error'
   });
+  instance.err = deprecated('zaq.err', instance.error, 'zaq.error');
 
   instance.fatal = instance.createLogStyle({
     style: 'red',
@@ -230,7 +231,7 @@ export function faqtory (namespace = '') {
   instance.divider = (text = '', options = {}) => {
     const { lineSymbol, centered, space, lineColor } = options;
     if (lineColor && !isString(lineColor) || !lineColor in chalk)
-      throw new TypeError('instance.divider: invalid lineColor option. Use a "chalk" color.');
+      throw new TypeError('zaq.divider: invalid lineColor option. Use a "chalk" color.');
     const { columns } = process.stdout;
     const namespacePrefix = getNamespacePrefix();
     const textWidth = text && text.length
