@@ -2,7 +2,7 @@ import path from 'path'
 import chalk from 'chalk'
 import moment from 'moment'
 import stripAnsi from 'strip-ansi'
-import package from '../package.json'
+import packageJson from '../package.json'
 import { joinBy, nLines, toString } from './utils'
 import { GUTTER_DEFAULT, NAMESPACE_TYPES, LEVEL_VALUES } from './config'
 import { isString, isNumber, isArray, isFunction, isObject, isDefined } from './typeUtils'
@@ -10,7 +10,7 @@ import { isString, isNumber, isArray, isFunction, isObject, isDefined } from './
 const namespaceCache = new Map();
 const { dim, blue, red, yellow, bold, reset } = chalk;
 
-export const { version } = package;
+export const { version } = packageJson;
 
 export const faqtory = (namespace = '') => {
   if (NAMESPACE_TYPES.includes(typeof namespace) && namespaceCache.has(namespace)) {
