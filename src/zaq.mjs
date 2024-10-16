@@ -94,7 +94,7 @@ export function faqtory (namespace = '') {
             return handler(input);
         }
       });
-    return zaq;
+    return instance;
   }
 
   instance.use = (handler, options = {}) => {
