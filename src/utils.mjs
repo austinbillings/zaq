@@ -13,8 +13,8 @@ export function nLines (n, line = '-') {
 };
 
 export function toString (content) {
-  return typeof content === 'undefined' ? 'undefined' : JSON
-    .stringify(content, null, '  ')
+  return typeof content === 'undefined' ? 'undefined' : (JSON
+    .stringify(content, null, '  ') || '')
     .split('\n')
     .map(line => {
       const trimmed = line.trim();
