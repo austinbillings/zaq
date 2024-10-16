@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const moment = require('moment');
@@ -248,28 +247,6 @@ const faqtory = (namespace = '') => {
 
     return zaq.space(output, space, 'info');
   };
-
-  zaq.weight = (...pathParts) => {
-    const file = path.join(...pathParts);
-    const basename = path.basename(file);
-
-    let stats;
-
-    try {
-      stats = fs.statSync(file);
-    } catch (e) {
-      return zaq.warn(`File ${chalk.yellow.italic(basename)} not found, cannot be weighed.`);
-    }
-
-    let filesize = (stats.size / 1024).toFixed(2);
-
-    zaq.info(`File ${blue.italic(basename)} is ${blue(filesize)} kb`);
-  };
-
-  namespaceCache.set(namespace, zaq);
-
-  return zaq;
-}
 
 const defaultInstance = faqtory();
 
