@@ -40,25 +40,26 @@ export function faqtory (namespace = '') {
     { handler: console.log }
   ];
 
-  this.version = version
-  this.loggers = loggers
+  const instance = {};
+  instance.version = version
+  instance.loggers = loggers
 
-  this.getNamespace = () => {
+  instance.getNamespace = () => {
     return namespace;
   }
 
   function deprecated (name = '', replacement = null, replacementName = null) {
     return (...args) => {
 
-      const deprecationWarning = `zaq method ${red(name)} is deprecated and will be removed in future versions of this.`;
+      const deprecationWarning = `zaq method ${red(name)} is deprecated and will be removed in future versions of instance.`;
 
-      this.warn(deprecationWarning);
+      instance.warn(deprecationWarning);
 
       if (!isFunction(replacement)) return;
 
       const replacementWarning = `${dim('Using alternative method')} ${replacementName ? blue(replacementName) : replacement.name} ${dim('instead.')}`
 
-      this.warn(replacementWarning);
+      instance.warn(replacementWarning);
 
       replacement(...args);
     }
@@ -69,8 +70,8 @@ export function faqtory (namespace = '') {
       .find(key => LEVEL_VALUES[key] === logLevel);
   }
 
-  this.log = (input, level = 'misc') => {
-    this.loggers
+  instance.log = (input, level = 'misc') => {
+    instance.loggers
       .filter(logger => isObject(logger))
       .forEach(({ handler, options = {} }) => {
         let { timestamps, logLevel, acceptLevels, stripColors } = options;
@@ -96,22 +97,22 @@ export function faqtory (namespace = '') {
     return zaq;
   }
 
-  this.use = (handler, options = {}) => {
-    return this.loggers.push({ handler, options });
+  instance.use = (handler, options = {}) => {
+    return instance.loggers.push({ handler, options });
   }
 
-  this.dispose = (index) => {
+  instance.dispose = (index) => {
     if (!isNumber(index))
-      throw new TypeError('this.dispose requires a valid handler index for removal.');
+      throw new TypeError('instance.dispose requires a valid handler index for removal.');
 
-    return delete this.loggers[index];
+    return delete instance.loggers[index];
   }
 
-  this.unuse = deprecated('this.unuse', this.dispose, 'this.dispose');
+  instance.unuse = deprecated('instance.unuse', instance.dispose, 'instance.dispose');
 
-  this.renderObject = (obj = null, color = 'cyan') => {
+  instance.renderObject = (obj = null, color = 'cyan') => {
     if (!isString(color) || !color in chalk)
-      throw new TypeError('this.renderObject requires color arg to be valid "chalk" style.');
+      throw new TypeError('instance.renderObject requires color arg to be valid "chalk" style.');
 
     const NAMESPACE = chalk[color].dim(getNamespacePrefix());
     const LEAD_DECOR = ' >>>>';
@@ -126,7 +127,7 @@ export function faqtory (namespace = '') {
     return output;
   };
 
-  this.constructMessage = ({ style, prefix = '' }, { text, loggables }) => {
+  instance.constructMessage = ({ style, prefix = '' }, { text, loggables }) => {
     const namespacePrefix = chalk.bold[style].dim(getNamespacePrefix());
     const givenPrefix = chalk.bold[style](prefix);
     const gutter = gutterize(`${namespacePrefix} ${givenPrefix}`);
@@ -134,22 +135,22 @@ export function faqtory (namespace = '') {
     const message = gutter + chalk.bold(text);
     const details = isDefined(loggables)
       ? Array.isArray(loggables)
-        ? loggables.map(obj => this.renderObject(obj, style)).join('')
-        : this.renderObject(loggables, style)
+        ? loggables.map(obj => instance.renderObject(obj, style)).join('')
+        : instance.renderObject(loggables, style)
       : '';
     return message + details;
   }
 
-  this.logMessage = ({ text, loggables }, { style, prefix, level }) => {
-    const message = this.constructMessage({ style, prefix }, { text, loggables });
-    return this.log(message, level);
+  instance.logMessage = ({ text, loggables }, { style, prefix, level }) => {
+    const message = instance.constructMessage({ style, prefix }, { text, loggables });
+    return instance.log(message, level);
   }
 
-  this.createLogStyle = (spec = {}) => (text, ...loggables) => {
-    return this.logMessage({ text, loggables }, spec);
+  instance.createLogStyle = (spec = {}) => (text, ...loggables) => {
+    return instance.logMessage({ text, loggables }, spec);
   };
 
-  this.extractTo = (keyToExtract, method) => {
+  instance.extractTo = (keyToExtract, method) => {
     return (data) => {
       var message = (isObject(data) && isString(data[keyToExtract]))
         ? data[keyToExtract]
@@ -161,7 +162,7 @@ export function faqtory (namespace = '') {
     }
   };
 
-  this.applyTo = (message, method) => {
+  instance.applyTo = (message, method) => {
     return (data) => {
       return isFunction(method)
         ? method(message, data)
@@ -169,67 +170,67 @@ export function faqtory (namespace = '') {
     }
   };
 
-  this.ok = this.createLogStyle({
+  instance.ok = instance.createLogStyle({
     style: 'green',
     prefix: '✓ OK:',
     level: 'info'
   });
 
-  this.win = deprecated('this.win', this.ok, 'this.ok');
+  instance.win = deprecated('instance.win', instance.ok, 'instance.ok');
 
-  this.err = this.createLogStyle({
+  instance.err = instance.createLogStyle({
     style: 'red',
     prefix: '✘ ERR:',
     level: 'error'
   });
 
-  this.fatal = this.createLogStyle({
+  instance.fatal = instance.createLogStyle({
     style: 'red',
     prefix: '✖ FATAL:',
     level: 'fatal'
   });
 
-  this.flag = this.createLogStyle({
+  instance.flag = instance.createLogStyle({
     style: 'magenta',
     prefix: '⚑ FLAG:',
     level: 'info'
   });
 
-  this.warn = this.createLogStyle({
+  instance.warn = instance.createLogStyle({
     style: 'yellow',
     prefix: '⚠ WARN:',
     level: 'warn'
   });
 
-  this.info = this.createLogStyle({
+  instance.info = instance.createLogStyle({
     style: 'blue',
     prefix: '→ INFO:',
     level: 'info'
   });
 
-  this.time = this.createLogStyle({
+  instance.time = instance.createLogStyle({
     style: 'grey',
     prefix: '◔ TIME:',
     level: 'info'
   });
 
-  this.debug = this.createLogStyle({
+  instance.debug = instance.createLogStyle({
     style: 'cyan',
     prefix: '⌗ DEBUG:',
     level: 'debug'
   });
 
-  this.space = (content, amount = 1, level) => {
+  instance.space = (content, amount = 1, level) => {
     let pad = dim(nLines(amount, '\n'));
-    return this.log(dim(pad) + reset(content) + dim(pad), level);
+    return instance.log(dim(pad) + reset(content) + dim(pad), level);
   }
 
-  this.mini = (str) => str.toString().trim().substr(0, 100);
+  instance.mini = (str) => str.toString().trim().substr(0, 100);
 
-  this.divider = (text = '', options = {}) => {
+  instance.divider = (text = '', options = {}) => {
     const { lineSymbol, centered, space, lineColor } = options;
     if (lineColor && !isString(lineColor) || !lineColor in chalk)
-      throw new TypeError('this.divider: invalid lineColor option. Use a "chalk" color.');
+      throw new TypeError('instance.divider: invalid lineColor option. Use a "chalk" color.');
     const { columns } = process.stdout;
     const namespacePrefix = getNamespacePrefix();
     const textWidth = text && text.length
@@ -248,13 +249,13 @@ export function faqtory (namespace = '') {
 
     const output = `${NAMESPACE} ${centered ? `${filler} ${text} ${filler}` : `${text} ${filler}`}`;
 
-    return this.space(output, space, 'info');
+    return instance.space(output, space, 'info');
   };
 
-  this.as = faqtory
+  instance.as = faqtory
 
 
-  return this;
+  return instance;
 }
 
 const defaultInstance = new faqtory();
