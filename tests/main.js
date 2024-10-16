@@ -1,4 +1,4 @@
-const zaq = require('../index');
+import zaq from '../src/zaq'
 
 var sampleJSON = {
   propName: {

@@ -1,16 +1,18 @@
-const path = require('path');
-const chalk = require('chalk');
-const moment = require('moment');
-const stripAnsi = require('strip-ansi');
+import path from 'path'
+import chalk from 'chalk'
+import moment from 'moment'
+import stripAnsi from 'strip-ansi'
+import package from '../package.json'
+import { joinBy, nLines, toString } from './utils'
+import { GUTTER_DEFAULT, NAMESPACE_TYPES, LEVEL_VALUES } from './config'
+import { isString, isNumber, isArray, isFunction, isObject, isDefined } from './typeUtils'
 
 const namespaceCache = new Map();
-const { version } = require('../package.json');
-const { joinBy, nLines, toString } = require('./utils');
-const { GUTTER_DEFAULT, NAMESPACE_TYPES, LEVEL_VALUES } = require('./config');
-const { isString, isNumber, isArray, isFunction, isObject, isDefined } = require('./typeUtils');
 const { dim, blue, red, yellow, bold, reset } = chalk;
 
-const faqtory = (namespace = '') => {
+export const { version } = package;
+
+export const faqtory = (namespace = '') => {
   if (NAMESPACE_TYPES.includes(typeof namespace) && namespaceCache.has(namespace)) {
     return namespaceCache.get(namespace);
   }
@@ -249,7 +251,6 @@ const faqtory = (namespace = '') => {
   };
 
 const defaultInstance = faqtory();
-
 defaultInstance.as = faqtory;
 
-module.exports = defaultInstance;
+export default defaultInstance;
