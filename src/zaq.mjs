@@ -250,8 +250,11 @@ export const faqtory = (namespace = '') => {
     return zaq.space(output, space, 'info');
   };
 
+  zaq.as = faqtory
+
   return zaq;
 }
+
 const defaultInstance = faqtory();
-defaultInstance.as = faqtory;
+
 export default defaultInstance;
