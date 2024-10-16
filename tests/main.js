@@ -31,8 +31,6 @@ function demoAllLogTypes (zaq) {
   zaq.time('Timer: 50ms elapsed.');
   zaq.debug('Function made it past parsing.');
   zaq.flag('USING API KEY','ASDFGHJKL8171992');
-  zaq.weight(__dirname, '../yarn.lock');
-  zaq.weight(__dirname, 'madeup.js');
   zaq.fatal('FATAL EXCEPTION ENCOUNTERED! CANNOT CONTINUE!');
 }
 
