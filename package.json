@@ -1,6 +1,6 @@
 {
   "name": "zaq",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Yet another fun little logging utility.",
   "main": "src/zaq.mjs",
   "type": "module",
