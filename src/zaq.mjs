@@ -2,17 +2,17 @@ import path from 'path'
 import chalk from 'chalk'
 import moment from 'moment'
 import stripAnsi from 'strip-ansi'
-import packageJson from '../package.json'
-import { joinBy, nLines, toString } from './utils'
-import { GUTTER_DEFAULT, NAMESPACE_TYPES, LEVEL_VALUES } from './config'
-import { isString, isNumber, isArray, isFunction, isObject, isDefined } from './typeUtils'
+import packageJson from '../package.json' with { type: "json" };
+import { joinBy, nLines, toString } from './utils.mjs'
+import { GUTTER_DEFAULT, NAMESPACE_TYPES, LEVEL_VALUES } from './config.mjs'
+import { isString, isNumber, isArray, isFunction, isObject, isDefined } from './typeUtils.mjs'
 
 const namespaceCache = new Map();
 const { dim, blue, red, yellow, bold, reset } = chalk;
 
 export const { version } = packageJson;
 
-export const faqtory = (namespace = '') => {
+export function faqtory (namespace = '') {
   if (NAMESPACE_TYPES.includes(typeof namespace) && namespaceCache.has(namespace)) {
     return namespaceCache.get(namespace);
   }
@@ -252,7 +252,11 @@ export const faqtory = (namespace = '') => {
 
   zaq.as = faqtory
 
-  return zaq;
+  for (let key of zaq) {
+      this[key] = zaq[key]
+  }
+
+  return this;
 }
 
 const defaultInstance = faqtory();
