@@ -1,18 +1,18 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 const CONNECTORS = ['{','}','[',']'];
 
-function joinBy (glue = '') {
+export function joinBy (glue = '') {
   return (...strings) => !Array.isArray(strings)
     ? strings
     : strings.filter(s => s).join(glue);
 };
 
-function nLines (n, line = '-') {
+export function nLines (n, line = '-') {
   return Array(n).join(line)
 };
 
-function toString (content) {
+export function toString (content) {
   return JSON
     .stringify(content, null, '  ')
     .split('\n')
@@ -24,5 +24,3 @@ function toString (content) {
     })
     .join('\n');
 }
-
-module.exports = { joinBy, nLines, toString };

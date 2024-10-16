@@ -2,7 +2,8 @@
   "name": "zaq",
   "version": "2.2.0",
   "description": "Yet another fun little logging utility.",
-  "main": "index.js",
+  "main": "index.mjs",
+  "type": "module",
   "scripts": {
     "test": "node tests/main.js"
   },
