@@ -12,7 +12,7 @@ const { dim, blue, red, yellow, bold, reset } = chalk;
 
 export const { version } = packageJson;
 
-export function faqtory (namespace = '') {
+export function faqtory (namespace = '', defaultLogLevel = 1) {
   if (NAMESPACE_TYPES.includes(typeof namespace) && namespaceCache.has(namespace)) {
     return namespaceCache.get(namespace);
   }
@@ -37,7 +37,7 @@ export function faqtory (namespace = '') {
   }
 
   const loggers = [
-    { handler: console.log }
+    { handler: console.log, logLevel: defaultLogLevel }
   ];
 
   const instance = {};
@@ -253,7 +253,7 @@ export function faqtory (namespace = '') {
     return instance.space(output, space, 'info');
   };
 
-  instance.as = faqtory
+  instance.as = (ns, dll = defaultLogLevel) => faqtory(ns, dll)
 
 
   return instance;
